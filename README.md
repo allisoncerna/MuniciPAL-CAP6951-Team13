@@ -2,11 +2,11 @@
 
 ## Data Manifest
 
-| File Name | Year | Source URL | Status | Notes |
+| Category | File Name | Year | Status | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| CityofDelray_2024_Ordinances | 2024 | [[Delray Site](https://weblink.mydelraybeach.com/LFExternal/Browse.aspx?id=25&dbid=0&repo=DelrayBeach)] | Ready | Selectable text, clean |
-| CityofDelray_2025_Ordinances | 2025 | [[Delray Site](https://weblink.mydelraybeach.com/LFExternal/Browse.aspx?id=25&dbid=0&repo=DelrayBeach)] | Ready | Selectable text, clean |
-| CityofDelray_2026_Ordinances | 2026 | [[Delray Site](https://weblink.mydelraybeach.com/LFExternal/Browse.aspx?id=25&dbid=0&repo=DelrayBeach)] | Ready | Selectable text, clean |
-| BF-7_Budget_Transfer.pdf | N/A | [Delray Clerk] | Ready | Budget Policy |
-| BF-24_Grant_Admin.pdf | N/A | [Delray Clerk] | Ready | Core Grant Rules |
-| BF-26_Accounts_Rec.pdf | N/A | [Delray Clerk] | Ready | Financial Policy |
+| **Ordinance** | Ordinance_2024_| 2024 | Ready | Selectable text |
+| **Ordinance** | Ordinance_2025_| 2025 | Ready | Selectable text |
+| **Ordinance** | Ordinance_2026_| 2026 | Ready | Selectable text |
+| **Policy** | BF-7_Budget_Transfer.pdf | N/A | Ready | Budget Policy |
+| **Policy** | BF-24_Grant_Admin.pdf | N/A | Ready | Core Grant Rules |
+| **Policy** | BF-26_Accounts_Rec.pdf | N/A | Ready | Financial Policy |
