@@ -11,12 +11,6 @@ MuniciPAL is a Retrieval-Augmented Generation (RAG) system designed to help city
 - OpenAI API Key
 - ChromaDB
 
-### Installation
-```bash
-git clone [https://github.com/your-org/MuniciPAL-CAP6951-Team13.git](https://github.com/your-org/MuniciPAL-CAP6951-Team13.git)
-cd MuniciPAL-CAP6951-Team13
-pip install -r requirements.txt
-
 ## Data Manifest
 
 | Category | File Name | Year | Status | Notes |
@@ -27,3 +21,9 @@ pip install -r requirements.txt
 | **Policy** | BF-7_Budget_Transfer.pdf | N/A | Ready | Budget Policy |
 | **Policy** | BF-24_Grant_Admin.pdf | N/A | Ready | Core Grant Rules |
 | **Policy** | BF-26_Accounts_Rec.pdf | N/A | Ready | Financial Policy |
+
+### Installation
+```bash
+git clone [https://github.com/your-org/MuniciPAL-CAP6951-Team13.git](https://github.com/your-org/MuniciPAL-CAP6951-Team13.git)
+cd MuniciPAL-CAP6951-Team13
+pip install -r requirements.txt
