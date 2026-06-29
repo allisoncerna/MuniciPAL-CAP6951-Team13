@@ -11,6 +11,18 @@ MuniciPAL is a Retrieval-Augmented Generation (RAG) system designed to help city
 - OpenAI API Key
 - ChromaDB
 
+## Project Roadmap
+    [x] Data Ingestion: Collection, cleaning, and manifest creation.
+
+    [ ] Vectorization: Implementation of embedding model and ChromaDB index.
+
+    [ ] LLM Generation: System prompt engineering and RAG pipeline integration.
+
+    [ ] Frontend: Streamlit interface development.
+
+## Data Inventory
+The system consumes documents defined in data/manifest.csv. Please refer to that file for the full list of supported ordinances and policy files.
+
 ## Data Manifest
 
 | Category | File Name | Year | Status | Notes |
@@ -27,3 +39,6 @@ MuniciPAL is a Retrieval-Augmented Generation (RAG) system designed to help city
 git clone [https://github.com/your-org/MuniciPAL-CAP6951-Team13.git](https://github.com/your-org/MuniciPAL-CAP6951-Team13.git)
 cd MuniciPAL-CAP6951-Team13
 pip install -r requirements.txt
+```
+
+Created for CAP 6951 - Graduate Project Class
