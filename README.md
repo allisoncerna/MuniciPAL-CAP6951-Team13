@@ -1,4 +1,21 @@
 # MuniciPAL-CAP6951-Team13
+*AI-Powered Policy and Ordinance Assistant*
+
+## Project Overview
+MuniciPAL is a Retrieval-Augmented Generation (RAG) system designed to help city staff navigate complex municipal ordinances and grant policies. By leveraging LLMs and localized vector storage, the system ensures accurate, grounded responses to regulatory queries.
+
+
+## Getting Started
+### Prerequisites
+- Python 3.10+
+- OpenAI API Key
+- ChromaDB
+
+### Installation
+```bash
+git clone [https://github.com/your-org/MuniciPAL-CAP6951-Team13.git](https://github.com/your-org/MuniciPAL-CAP6951-Team13.git)
+cd MuniciPAL-CAP6951-Team13
+pip install -r requirements.txt
 
 ## Data Manifest
 
