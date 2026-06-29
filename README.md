@@ -21,7 +21,7 @@ MuniciPAL is a Retrieval-Augmented Generation (RAG) system designed to help city
     [ ] Frontend: Streamlit interface development.
 
 ## Data Inventory
-The system consumes documents defined in data/manifest.csv. Please refer to that file for the full list of supported ordinances and policy files.
+The system consumes documents from the City of Delray Beach. Please refer to data/raw for the full list of supported ordinances and policy files.
 
 ## Data Manifest
 
