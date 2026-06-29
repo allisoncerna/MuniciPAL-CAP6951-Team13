@@ -2,6 +2,10 @@
 # By: Allison Cerna
 # ==============================================================================
 
+
+import openai
+import os
+
 class MuniciPALEngine:
     def __init__(self, api_key):
         # Initializing the OpenAI client
@@ -24,7 +28,7 @@ class MuniciPALEngine:
         
         # Calling the API. Keeping it simple—context + question = result.
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"Context: {context}\n\nQuestion: {user_query}"}
