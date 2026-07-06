@@ -1,40 +1,46 @@
 # ==============================================================================
-# DATA INGESTION: AUTOMATED MANIFEST GENERATOR
-# By: Allison Cerna
+# INGESTION: Extracting text from our nested PDF structure
+# By: Allison Cerna (Team 13 Lead)
 # ==============================================================================
 
-import os
+import pdfplumber
 import pandas as pd
+import os
 
-# I'm setting this up so we don't have to manually update a CSV every time we 
-# add a new PDF. The pipeline just needs to run this and it's good to go.
-def generate_manifest(root_dir='data/raw', output_file='data/manifest.csv'):
+def extract_text_from_pdf(pdf_path):
+    # Grabbing the text from every page of the PDF.
+    # Since these are text-selectable, this should be super clean.
+    text = ""
+    try:
+        with pdfplumber.open(pdf_path) as pdf:
+            for page in pdf.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text += page_text + "\n"
+    except Exception as e:
+        print(f"Bummer, couldn't read {pdf_path}: {e}")
+    return text
+
+def process_pdfs_to_manifest(root_folder='data/raw', output_csv='data/manifest.csv'):
+    all_data = []
     
-    # We'll store our file records here as we scan the folders
-    manifest_data = []
+    # Using os.walk to go through all subfolders (like the year folders in ordinances).
+    # This ensures we hit every single PDF regardless of how deep it's buried.
+    for root, dirs, files in os.walk(root_folder):
+        for filename in files:
+            if filename.endswith(".pdf"):
+                path = os.path.join(root, filename)
+                print(f"Processing: {filename}...")
+                content = extract_text_from_pdf(path)
+                
+                # Adding it to our list so we can turn it into a CSV later.
+                all_data.append({"filename": filename, "text": content})
     
-    # Walking through the directory to find everything. 
-    # The folder name acts as our category (Ordinance vs Policy).
-    for root, dirs, files in os.walk(root_dir):
-        for file in files:
-            if file.lower().endswith(".pdf"):
-                path = os.path.join(root, file)
-                category = os.path.basename(root)
-                manifest_data.append({
-                    'Category': category,
-                    'File Name': file,
-                    'Path': path,
-                    'Status': 'Ready'
-                })
-    
-    # Saving this as the "Source of Truth" for the RAG pipeline.
-    df = pd.DataFrame(manifest_data)
-    
-    # Ensure the output directory exists before saving
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    
-    df.to_csv(output_file, index=False)
-    print(f"Manifest updated: {len(df)} files tracked at {output_file}")
+    # Save everything into a CSV so the rest of our pipeline can access it.
+    df = pd.DataFrame(all_data)
+    df.to_csv(output_csv, index=False)
+    print(f"Done! Processed {len(all_data)} PDFs into {output_csv}.")
 
 if __name__ == "__main__":
-    generate_manifest()
+    # Pointing it at the raw data folder to start the ingestion.
+    process_pdfs_to_manifest()
