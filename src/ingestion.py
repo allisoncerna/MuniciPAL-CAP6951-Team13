@@ -1,3 +1,4 @@
+# ==============================================================================
 # DATA INGESTION: AUTOMATED MANIFEST GENERATOR
 # By: Allison Cerna
 # ==============================================================================
@@ -28,10 +29,12 @@ def generate_manifest(root_dir='data/raw', output_file='data/manifest.csv'):
     
     # Saving this as the "Source of Truth" for the RAG pipeline.
     df = pd.DataFrame(manifest_data)
+    
+    # Ensure the output directory exists before saving
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    
     df.to_csv(output_file, index=False)
     print(f"Manifest updated: {len(df)} files tracked at {output_file}")
 
 if __name__ == "__main__":
     generate_manifest()
-
-    import openai
