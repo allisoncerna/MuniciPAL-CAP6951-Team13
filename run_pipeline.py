@@ -1,6 +1,12 @@
+# ==============================================================================
+# PIPELINE TESTER: Verifying end-to-end flow (Ingestion -> Retrieval -> LLM)
+# By: Allison Cerna (Team 13 Lead)
+# ==============================================================================
+
 import os
 from dotenv import load_dotenv
 from src.llm_engine import MuniciPALEngine
+from src.retrieval import get_relevant_chunks
 
 # 1. Loading up our environment variables so we can grab that API key safely.
 load_dotenv()
@@ -14,13 +20,14 @@ my_api_key = os.getenv("GOOGLE_API_KEY")
 # so we can keep testing the pipeline without needing an active connection.
 engine = MuniciPALEngine(api_key=my_api_key)
 
-# 4. Running a quick test to make sure everything is wired up correctly.
-mock_chunks = [
-    "Ordinance 2026-01: All grant applications must be submitted by June 1st.",
-    "Policy BF-7: Budget transfers require approval from the City Manager."
-]
+# 4. Running the full pipeline test to make sure everything is wired up.
 user_query = "When is the grant deadline?"
 
-# Getting the response from the engine—this should now hit Gemini (or show [MOCK MODE] if no key).
-response = engine.generate_response(user_query, mock_chunks)
+# First, pull the relevant text chunks (using our skeleton retriever).
+relevant_chunks = get_relevant_chunks(user_query)
+
+# Then, send those chunks + the user's question to the engine for an answer.
+response = engine.generate_response(user_query, relevant_chunks)
+
+print(f"Query: {user_query}")
 print(f"Engine Response: {response}")
