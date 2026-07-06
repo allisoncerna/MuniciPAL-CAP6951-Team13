@@ -14,8 +14,8 @@ class MuniciPALEngine:
         if self.api_key:
             # Setting up the connection to Gemini.
             genai.configure(api_key=self.api_key)
-            # Using Gemini 1.5 Flash—it’s fast, free, and perfect for what we need.
-            self.model = genai.GenerativeModel('gemini-1.5-flash-001')
+            
+            self.model = genai.GenerativeModel('gemini-2.0-flash')
         else:
             self.model = None
 
