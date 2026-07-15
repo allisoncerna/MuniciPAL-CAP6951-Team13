@@ -12,9 +12,8 @@ export default function SettingsPage() {
       <div className="px-6 py-6 sm:px-10 sm:py-10 lg:px-12">
         <div className="mx-auto max-w-5xl space-y-6">
           <SectionHeader
-            eyebrow="Settings"
-            title="Workspace preferences"
-            description="Configure the profile, appearance, AI behavior, and document defaults for the workspace."
+            title="Settings"
+            description="Configure profile, appearance, AI behavior, and document defaults for this workspace"
           />
 
           <div className="grid gap-6">

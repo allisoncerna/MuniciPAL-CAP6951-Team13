@@ -9,18 +9,18 @@ export function SettingsAppearanceSection() {
   const [reduceMotion, setReduceMotion] = useState(true);
 
   return (
-    <SettingsSection title="Appearance" description="Customize how the workspace feels during daily use.">
+    <SettingsSection title="Appearance" description="Customize workspace appearance for daily use">
       <div className="space-y-5">
         <SettingRow
           title="Compact spacing"
-          description="Tighten vertical spacing in tables and cards for denser workflows."
+          description="Tighten vertical spacing in tables and cards for denser workflows"
           checked={compactMode}
           onCheckedChange={setCompactMode}
           ariaLabel="Toggle compact spacing"
         />
         <SettingRow
           title="Reduce motion"
-          description="Limit decorative motion and transitions throughout the interface."
+          description="Limit decorative motion and transitions throughout the interface"
           checked={reduceMotion}
           onCheckedChange={setReduceMotion}
           ariaLabel="Toggle reduce motion"

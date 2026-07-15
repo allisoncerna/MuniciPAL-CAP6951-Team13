@@ -10,25 +10,25 @@ export function SettingsAiPreferencesSection() {
   const [autoSummaries, setAutoSummaries] = useState(true);
 
   return (
-    <SettingsSection title="AI Preferences" description="Define the generation behavior used for municipal drafts.">
+    <SettingsSection title="AI Preferences" description="Define AI generation behavior used for drafts">
       <div className="space-y-5">
         <SettingRow
           title="Strict source grounding"
-          description="Prioritize official municipal documents and reduce unsupported generation."
+          description="Prioritize official municipal documents and reduce unsupported generation"
           checked={strictSources}
           onCheckedChange={setStrictSources}
           ariaLabel="Toggle strict source grounding"
         />
         <SettingRow
           title="Conversational draft tone"
-          description="Use a slightly friendlier tone in first-pass drafts when the audience allows it."
+          description="Use a conversational tone in first-pass drafts when the audience allows it"
           checked={draftTone}
           onCheckedChange={setDraftTone}
           ariaLabel="Toggle conversational draft tone"
         />
         <SettingRow
           title="Auto-generate summaries"
-          description="Create a short executive summary for generated documents by default."
+          description="Create a short executive summary for generated documents by default"
           checked={autoSummaries}
           onCheckedChange={setAutoSummaries}
           ariaLabel="Toggle auto-generate summaries"

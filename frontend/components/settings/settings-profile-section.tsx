@@ -5,16 +5,16 @@ const departments = ["Parks & Recreation", "Community Development", "Public Work
 
 export function SettingsProfileSection() {
   return (
-    <SettingsSection title="Profile" description="Update the information shown across your workspace.">
+    <SettingsSection title="Profile" description="Update profile information shown in workspace">
       <div className="grid gap-4 md:grid-cols-2">
         <Field label="First Name">
-          <Input defaultValue="Sarah" />
+          <Input defaultValue="" />
         </Field>
         <Field label="Last Name">
-          <Input defaultValue="Johnson" />
+          <Input defaultValue="" />
         </Field>
         <Field label="Email Address" className="md:col-span-2">
-          <Input defaultValue="sjohnson@municipality.gov" type="email" />
+          <Input defaultValue="" type="email" />
         </Field>
         <Field label="Department" className="md:col-span-2">
           <div className="relative">

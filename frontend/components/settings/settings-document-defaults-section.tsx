@@ -10,7 +10,7 @@ export function SettingsDocumentDefaultsSection() {
   const [autoSaveDrafts, setAutoSaveDrafts] = useState(true);
 
   return (
-    <SettingsSection title="Document Defaults" description="Set the default output preferences for new documents.">
+    <SettingsSection title="Document Defaults" description="Set default output preferences for new documents">
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Default Document Type">
           <select className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
@@ -30,7 +30,7 @@ export function SettingsDocumentDefaultsSection() {
         <div className="md:col-span-2">
           <SettingRow
             title="Auto-save drafts"
-            description="Store intermediate drafts automatically while generating or editing documents."
+            description="Store intermediate drafts automatically while generating or editing documents"
             checked={autoSaveDrafts}
             onCheckedChange={setAutoSaveDrafts}
             ariaLabel="Toggle auto-save drafts"
