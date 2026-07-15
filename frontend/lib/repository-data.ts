@@ -10,6 +10,8 @@ export type RepositoryDocument = {
   size: string;
   status: "Active" | "Review" | "Archived";
   tags: string[];
+  sourcePath?: string;
+  localUrl?: string;
 };
 
 export type RepositorySortKey = "newest" | "oldest" | "name-asc" | "name-desc";

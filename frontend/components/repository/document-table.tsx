@@ -8,6 +8,13 @@ import type { RepositoryDocument } from "@/lib/repository-data";
 
 type DocumentTableProps = {
   documents: RepositoryDocument[];
+  activeActionDocumentId: string | null;
+  onToggleActions: (documentId: string) => void;
+  onViewDocument: (document: RepositoryDocument) => void;
+  onEditDocument: (document: RepositoryDocument) => void;
+  onCopyLinkDocument: (document: RepositoryDocument) => void;
+  onDownloadDocument: (document: RepositoryDocument) => void;
+  onDeleteDocument: (document: RepositoryDocument) => void;
 };
 
 const statusStyles = {
@@ -16,7 +23,16 @@ const statusStyles = {
   Archived: "muted"
 } as const;
 
-export function DocumentTable({ documents }: DocumentTableProps) {
+export function DocumentTable({
+  documents,
+  activeActionDocumentId,
+  onToggleActions,
+  onViewDocument,
+  onEditDocument,
+  onCopyLinkDocument,
+  onDownloadDocument,
+  onDeleteDocument
+}: DocumentTableProps) {
   if (documents.length === 0) {
     return (
       <EmptyState
@@ -52,7 +68,17 @@ export function DocumentTable({ documents }: DocumentTableProps) {
                 <Badge tone={statusStyles[document.status]}>{document.status}</Badge>
               </span>
               <span className="flex justify-end">
-                <DocumentActions documentName={document.name} />
+                <DocumentActions
+                  documentId={document.id}
+                  documentName={document.name}
+                  isOpen={activeActionDocumentId === document.id}
+                  onToggle={onToggleActions}
+                  onView={() => onViewDocument(document)}
+                  onEdit={() => onEditDocument(document)}
+                  onCopyLink={() => onCopyLinkDocument(document)}
+                  onDownload={() => onDownloadDocument(document)}
+                  onDelete={() => onDeleteDocument(document)}
+                />
               </span>
             </div>
           ))}
@@ -75,7 +101,17 @@ export function DocumentTable({ documents }: DocumentTableProps) {
             </dl>
 
             <div className="flex justify-end border-t border-slate-100 pt-3">
-              <DocumentActions documentName={document.name} />
+              <DocumentActions
+                documentId={document.id}
+                documentName={document.name}
+                isOpen={activeActionDocumentId === document.id}
+                onToggle={onToggleActions}
+                onView={() => onViewDocument(document)}
+                onEdit={() => onEditDocument(document)}
+                onCopyLink={() => onCopyLinkDocument(document)}
+                onDownload={() => onDownloadDocument(document)}
+                onDelete={() => onDeleteDocument(document)}
+              />
             </div>
           </div>
         ))}
