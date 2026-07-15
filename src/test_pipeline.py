@@ -6,7 +6,7 @@ query = "What is the policy regarding municipal grant deadlines?"
 
 print(f"Testing pipeline with query: '{query}'...")
 
-# This calls your orchestrator, which triggers retrieval and generation
+# This calls our orchestrator, which triggers retrieval and generation
 response = run_pipeline(query)
 
 print("-" * 30)
