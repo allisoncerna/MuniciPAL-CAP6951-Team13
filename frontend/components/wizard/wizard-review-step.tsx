@@ -14,7 +14,7 @@ export function ReviewStep() {
     <Card>
       <CardHeader>
         <CardTitle>Review &amp; Generate</CardTitle>
-        <CardDescription>Review your selections before generating the document.</CardDescription>
+        <CardDescription>Review your selections before generating the document</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 lg:grid-cols-[1.2fr_0.8fr]">
@@ -33,7 +33,7 @@ export function ReviewStep() {
           </div>
           <div className="rounded-2xl border border-brand-100 bg-brand-50 p-5 text-center">
             <p className="text-sm font-semibold text-brand-700">Ready to Generate</p>
-            <p className="mt-2 text-sm leading-6 text-brand-700/90">Your document will be generated using AI based on the selected municipal sources.</p>
+            <p className="mt-2 text-sm leading-6 text-brand-700/90">Your document will be generated using AI based on the selected municipal sources</p>
             <Button type="button" className="mt-4">
               Generate Draft
             </Button>

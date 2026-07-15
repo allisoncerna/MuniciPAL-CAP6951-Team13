@@ -12,19 +12,19 @@ export const documentTypes = [
   {
     id: "service-description",
     title: "Service Description",
-    description: "Create detailed descriptions of municipal services for public and internal use.",
+    description: "Create detailed descriptions of municipal services for public and internal use",
     icon: Sparkles
   },
   {
     id: "compliance-summary",
     title: "Compliance Summary",
-    description: "Generate compliance reports aligned with regulations and grant requirements.",
+    description: "Generate compliance reports aligned with regulations and grant requirements",
     icon: ShieldCheck
   },
   {
     id: "public-report",
     title: "Public Report",
-    description: "Produce clear, accessible reports for residents and stakeholders.",
+    description: "Produce clear, accessible reports for residents and stakeholders",
     icon: FileText
   }
 ] as const;

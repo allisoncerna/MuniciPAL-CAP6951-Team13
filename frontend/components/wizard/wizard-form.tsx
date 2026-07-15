@@ -46,9 +46,8 @@ export function WizardForm() {
       <div className="px-6 py-6 sm:px-10 sm:py-10 lg:px-12">
         <div className="mx-auto max-w-5xl space-y-6">
           <SectionHeader
-            eyebrow="Document Generation Wizard"
-            title="Build compliant municipal documents"
-            description="Follow a guided workflow to assemble, review, and generate a draft grounded in municipal source materials."
+            title="Generate Document"
+            description="Follow this guide to assemble, review, and generate a draft grounded in source materials"
           />
 
           <Card className="p-4 sm:p-6">

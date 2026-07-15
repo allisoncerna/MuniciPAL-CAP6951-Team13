@@ -14,7 +14,7 @@ export function AudienceStep() {
     <Card>
       <CardHeader>
         <CardTitle>Who is the target audience?</CardTitle>
-        <CardDescription>Select one or more audience groups for this document.</CardDescription>
+        <CardDescription>Select one or more audience groups for this document</CardDescription>
       </CardHeader>
       <CardContent>
         <Controller

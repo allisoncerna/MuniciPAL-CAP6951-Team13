@@ -12,7 +12,7 @@ export function InstructionsStep() {
     <Card>
       <CardHeader>
         <CardTitle>Additional instructions</CardTitle>
-        <CardDescription>Provide any special requirements, constraints, or tone guidance.</CardDescription>
+        <CardDescription>Provide any special requirements, constraints, or tone guidance</CardDescription>
       </CardHeader>
       <CardContent>
         <Field label="Instructions">

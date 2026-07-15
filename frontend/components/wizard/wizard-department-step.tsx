@@ -14,7 +14,7 @@ export function DepartmentStep() {
     <Card>
       <CardHeader>
         <CardTitle>Department Information</CardTitle>
-        <CardDescription>Tell us about your department and program.</CardDescription>
+        <CardDescription>Tell us about your department and program</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <Field label="Department Name">

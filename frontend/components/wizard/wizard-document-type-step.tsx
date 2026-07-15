@@ -14,7 +14,7 @@ export function DocumentTypeStep() {
     <Card>
       <CardHeader>
         <CardTitle>What would you like to generate?</CardTitle>
-        <CardDescription>Select the type of document you want to create.</CardDescription>
+        <CardDescription>Select the type of document you want to create</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <Controller
