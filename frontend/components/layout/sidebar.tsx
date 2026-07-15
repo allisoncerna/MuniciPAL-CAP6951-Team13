@@ -24,7 +24,7 @@ export function Sidebar() {
           </div>
           <div>
             <div className="text-lg font-semibold leading-none">MuniciPAL</div>
-            <p className="mt-1 text-xs text-blue-100">AI Assistant for Municipal Staff</p>
+            <p className="mt-1 text-xs text-blue-100">Local Government Assistant</p>
           </div>
         </div>
       </div>
@@ -50,8 +50,8 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-xs text-blue-100">
-        <p className="font-medium text-white">2026 MuniciPAL</p>
-        <p className="mt-1">Production frontend scaffold</p>
+        <p className="font-medium text-white">© 2026 MuniciPAL</p>
+        <p className="mt-1">Version 1.0.0</p>
       </div>
     </aside>
   );

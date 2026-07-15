@@ -2,18 +2,18 @@ import { FileText, ShieldCheck, Sparkles } from "lucide-react";
 
 export const dashboardFeatures = [
   {
-    title: "Generate Service Descriptions",
+    title: "Service Descriptions",
     description: "Create comprehensive service descriptions based on municipal policies and guidelines.",
     icon: Sparkles
   },
   {
-    title: "Create Compliance Summaries",
-    description: "Produce detailed compliance reports aligned with municipal regulations and grant requirements.",
+    title: "Compliance Summaries",
+    description: "Produce detailed compliance reports reflecting regulations and grant requirements.",
     icon: ShieldCheck
   },
   {
-    title: "Produce Public Reports",
-    description: "Generate clear, accessible reports for residents and stakeholders using official sources.",
+    title: "Public Reports",
+    description: "Gather accessible reports for residents and stakeholders using official sources.",
     icon: FileText
   }
 ] as const;
