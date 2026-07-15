@@ -2,41 +2,40 @@ import pandas as pd
 from src.llm_engine import MuniciPALEngine
 import os
 
-# Initializing the engine. Using the API key here to keep us flexible—
-# makes it easy to toggle between real and mock modes during testing.
+# getting the engine ready and using the api key so we can switch between real/mock modes easily
 engine = MuniciPALEngine(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def retrieve_relevant_chunks(query, csv_path='data/manifest.csv'):
     """
-    Temporary placeholder for the retrieval layer.
-    Keyword check against our manifest.csv for now; this *must* be 
-    swapped out for the ChromaDB index once Matthew finishes it.
+    quick and dirty retrieval for now 
+    just doing a keyword check on the manifest, gotta swap this 
+    for the chromaDB index once matt gets that part done
     """
     df = pd.read_csv(csv_path)
-    # Basic filtering to grab potentially relevant content for the query
+    # just grabbing anything that looks relevant
     results = df[df['text'].str.contains(query, case=False, na=False)]
     
-    # Returning top 3 matches to feed the engine
+    # sending the top 3 matches to the engine
     return results['text'].head(3).tolist()
 
 def run_pipeline(user_query):
-    # Breaking the query into keywords to improve our retrieval rate.
-    # Ignoring short words to reduce noise in the search results.
+    # splitting the query into keywords to catch more results
+    # ignoring short words so we don't get too much noise
     keywords = [word for word in user_query.split() if len(word) > 3]
     
-    # Searching for any match in our manifest.
+    # hunting for any matches in our manifest
     df = pd.read_csv('data/manifest.csv')
     
-    # Filtering rows that contain at least one of our keywords.
+    # keeping rows that have at least one of our keywords
     mask = df['text'].apply(lambda x: any(k.lower() in str(x).lower() for k in keywords))
     results = df[mask]
     
-    # Limiting to top 3 chunks to stay within LLM context limits.
+    # keeping it to top 3 so we don't blow up the context window
     chunks = results['text'].head(3).tolist()
     
-    # Graceful exit if our data lacks the info requested.
+    # letting the user know if we're totally stumped
     if not chunks:
-        return "I do not have enough information."
+        return "I do not have enough information"
     
-    # Final pass through the engine to get a grounded response.
+    # sending it to the engine to get a grounded answer
     return engine.generate_response(user_query, chunks)
