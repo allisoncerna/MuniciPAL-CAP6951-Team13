@@ -36,7 +36,7 @@ def process_pdfs_to_manifest(root_folder='data/raw', output_csv='data/manifest.c
                 # Adding it to our list so we can turn it into a CSV later.
                 all_data.append({"filename": filename, "text": content})
     
-    # Save everything into a CSV so the rest of our pipeline can access it.
+    # Saving everything into a CSV so the rest of our pipeline can access it.
     df = pd.DataFrame(all_data)
     df.to_csv(output_csv, index=False)
     print(f"Done! Processed {len(all_data)} PDFs into {output_csv}.")
