@@ -8,11 +8,11 @@ import google.generativeai as genai
 
 class MuniciPALEngine:
     def __init__(self, api_key=None):
-        # We're passing the key in so we can swap between real/mock modes easily.
-        # This keeps our app flexible for testing without needing to burn API credits.
+        # passing the key in so we can swap between real/mock modes easy
+        # keeps our app flexible for testing without burning api credits
         self.api_key = api_key
         if self.api_key:
-            # Setting up the connection to Gemini.
+            # setting up the connection to gemini
             genai.configure(api_key=self.api_key)
             
             self.model = genai.GenerativeModel('gemini-2.0-flash')
@@ -20,17 +20,17 @@ class MuniciPALEngine:
             self.model = None
 
     def generate_response(self, user_query, retrieved_chunks):
-        # I'm keeping 'Mock Mode' active so we don't block development 
-        # just because of API quotas. It helps us test the pipeline architecture now.
+        # keeping mock mode active so we don't block dev just because of api quotas
+        # helps us test the pipeline architecture right now
         if not self.model:
-            return f"[MOCK MODE] Logic test: Successfully processed query '{user_query}' with {len(retrieved_chunks)} chunks."
+            return f"[MOCK MODE] logic test: successfully processed query '{user_query}' with {len(retrieved_chunks)} chunks"
         
-        # Here's the "brain." I'm joining our context chunks into one clean string.
-        # This is where the retrieval data meets the prompt.
+        # here's the brain
+        # joining our context chunks into one clean string where retrieval data meets the prompt
         context = "\n\n".join(retrieved_chunks)
         
-        # Hardcoding the system prompt to keep the model grounded. 
-        # I want to make sure it doesn't hallucinate outside of our municipal docs.
+        # hardcoding the system prompt to keep the model grounded
+        # really want to make sure it doesn't hallucinate outside of our municipal docs
         system_instruction = (
             "You are a municipal policy assistant for Team 13 (MuniciPAL). "
             "Use ONLY the provided context to answer the user's question. "
@@ -38,11 +38,12 @@ class MuniciPALEngine:
             "'I do not have enough information in the municipal records to answer this.'"
         )
         
-        # Keeping the API call straightforward. Context + Question = Grounded Answer.
+        # keeping the api call straightforward
+        # context plus question equals grounded answer
         prompt = f"{system_instruction}\n\nContext: {context}\n\nQuestion: {user_query}"
         
-        # Sending the request to Gemini to get our answer.
+        # sending the request to gemini to get our answer
         response = self.model.generate_content(prompt)
         
-        # Extracting the content back to the user.
+        # grabbing the content back for the user
         return response.text
