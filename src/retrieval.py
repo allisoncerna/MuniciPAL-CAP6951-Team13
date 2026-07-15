@@ -3,11 +3,6 @@
 # By: Allison Cerna (Team 13 Lead)
 # ==============================================================================
 
-# ==============================================================================
-# RAG RETRIEVAL: Placeholder Retrieval Logic
-# By: Allison Cerna (Team 13 Lead)
-# ==============================================================================
-
 import pandas as pd
 
 def get_relevant_chunks(query, manifest_path='data/manifest.csv'):
