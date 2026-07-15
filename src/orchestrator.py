@@ -20,13 +20,19 @@ def retrieve_relevant_chunks(query, csv_path='data/manifest.csv'):
     return results['text'].head(3).tolist()
 
 def run_pipeline(user_query):
-    # 1. Retrieval: Getting the context chunks first
-    chunks = retrieve_relevant_chunks(user_query)
+    # 1. Break query into keywords
+    keywords = [word for word in user_query.split() if len(word) > 3]
     
-    # 2. Generation: Running it through the engine
-    # If we find nothing, let the model handle the "I don't know" gracefully
+    # 2. Search for any of the keywords
+    df = pd.read_csv('data/manifest.csv')
+    
+    # This filter finds rows that contain ANY of the keywords
+    mask = df['text'].apply(lambda x: any(k.lower() in str(x).lower() for k in keywords))
+    results = df[mask]
+    
+    chunks = results['text'].head(3).tolist()
+    
     if not chunks:
-        return "I do not have enough information in the municipal records to answer this."
-        
-    response = engine.generate_response(user_query, chunks)
-    return response
+        return "I do not have enough information."
+    
+    return engine.generate_response(user_query, chunks)
