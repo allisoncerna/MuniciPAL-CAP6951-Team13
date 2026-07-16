@@ -32,9 +32,20 @@ def process_pdfs_to_manifest(root_folder='data/raw', output_csv='data/manifest.c
                 path = os.path.join(root, filename)
                 print(f"Processing: {filename}...")
                 content = extract_text_from_pdf(path)
-                
+
+                # Capturing where the file lives so the retrieval index can
+                # carry source metadata (category folder + year subfolder).
+                rel_parts = os.path.relpath(path, root_folder).split(os.sep)
+                category = rel_parts[0] if len(rel_parts) > 1 else ""
+                year = rel_parts[1] if len(rel_parts) > 2 else ""
+
                 # Adding it to our list so we can turn it into a CSV later.
-                all_data.append({"filename": filename, "text": content})
+                all_data.append({
+                    "filename": filename,
+                    "category": category,
+                    "year": year,
+                    "text": content,
+                })
     
     # Saving everything into a CSV so the rest of our pipeline can access it.
     df = pd.DataFrame(all_data)

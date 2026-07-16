@@ -1,0 +1,16 @@
+# MuniciPAL backend dependencies (Python 3.10+)
+# Ingestion
+pdfplumber
+pandas
+
+# RAG pipeline
+chromadb>=0.5
+
+# LLM generation
+google-generativeai
+python-dotenv
+
+# API layer
+fastapi
+uvicorn[standard]
+python-multipart

@@ -1,41 +1,23 @@
-import pandas as pd
-from src.llm_engine import MuniciPALEngine
 import os
 
-# getting the engine ready and using the api key so we can switch between real/mock modes easily
+from src.llm_engine import MuniciPALEngine
+from src.retrieval import get_relevant_chunks
+
+# Seting up the engine. Using the API key here to keep things flexible
+# so we can easily toggle between real/mock modes.
 engine = MuniciPALEngine(api_key=os.getenv("GOOGLE_API_KEY"))
 
-def retrieve_relevant_chunks(query, csv_path='data/manifest.csv'):
-    """
-    quick and dirty retrieval for now 
-    just doing a keyword check on the manifest, gotta swap this 
-    for the chromaDB index once matt gets that part done
-    """
-    df = pd.read_csv(csv_path)
-    # just grabbing anything that looks relevant
-    results = df[df['text'].str.contains(query, case=False, na=False)]
-    
-    # sending the top 3 matches to the engine
-    return results['text'].head(3).tolist()
 
 def run_pipeline(user_query):
-    # splitting the query into keywords to catch more results
-    # ignoring short words so we don't get too much noise
-    keywords = [word for word in user_query.split() if len(word) > 3]
-    
-    # hunting for any matches in our manifest
-    df = pd.read_csv('data/manifest.csv')
-    
-    # keeping rows that have at least one of our keywords
-    mask = df['text'].apply(lambda x: any(k.lower() in str(x).lower() for k in keywords))
-    results = df[mask]
-    
-    # keeping it to top 3 so we don't blow up the context window
-    chunks = results['text'].head(3).tolist()
-    
-    # letting the user know if we're totally stumped
+    # 1. Retrieval: Getting the context chunks first
+    # (now backed by the ChromaDB semantic index in src/retrieval.py,
+    # which replaced the old keyword scan over manifest.csv)
+    chunks = get_relevant_chunks(user_query)
+
+    # 2. Generation: Running it through the engine
+    # If we find nothing, let the model handle the "I don't know" gracefully
     if not chunks:
-        return "I do not have enough information"
-    
-    # sending it to the engine to get a grounded answer
-    return engine.generate_response(user_query, chunks)
+        return "I do not have enough information in the municipal records to answer this."
+
+    response = engine.generate_response(user_query, chunks)
+    return response

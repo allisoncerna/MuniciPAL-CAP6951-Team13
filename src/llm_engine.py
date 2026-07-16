@@ -44,6 +44,46 @@ class MuniciPALEngine:
         
         # sending the request to gemini to get our answer
         response = self.model.generate_content(prompt)
-        
+
         # grabbing the content back for the user
+        return response.text
+
+    def generate_document(self, spec, retrieved_chunks):
+        # Drafting endpoint for the wizard flow (Matthew). `spec` is a dict of
+        # the wizard answers: document_type, department_name, program_name,
+        # department_type, audience, additional_instructions.
+        if not self.model:
+            return (
+                f"[MOCK MODE] Would draft a '{spec.get('document_type')}' for "
+                f"{spec.get('department_name')} using {len(retrieved_chunks)} chunks."
+            )
+
+        context = "\n\n".join(retrieved_chunks)
+        audience = ", ".join(spec.get("audience") or []) or "General public"
+
+        # Same grounding rules as Q&A, plus drafting instructions. Every chunk
+        # is prefixed with its source file, so we ask the model to cite them.
+        system_instruction = (
+            "You are MuniciPAL, a municipal document drafting assistant. "
+            "Draft the requested document using ONLY facts from the provided "
+            "context. Cite the source document (by filename) after any policy "
+            "detail you use, like (Source: <filename>). If the context lacks "
+            "information for a section, insert the placeholder "
+            "[NEEDS STAFF INPUT] rather than inventing details. "
+            "Write in clear, plain language appropriate for the target audience."
+        )
+
+        request = (
+            f"Document type: {spec.get('document_type')}\n"
+            f"Department: {spec.get('department_name')} ({spec.get('department_type')})\n"
+            f"Program: {spec.get('program_name')}\n"
+            f"Target audience: {audience}\n"
+            f"Additional instructions: {spec.get('additional_instructions') or 'None'}"
+        )
+
+        prompt = (
+            f"{system_instruction}\n\nContext: {context}\n\n"
+            f"Drafting request:\n{request}\n\nDraft the complete document now."
+        )
+        response = self.model.generate_content(prompt)
         return response.text

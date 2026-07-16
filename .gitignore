@@ -1,6 +1,9 @@
 .env
 __pycache__/
 *.pyc
+.venv/
 data/manifest.csv
+data/chroma_db/
+data/raw/uploads/
 frontend/node_modules/
 frontend/.next/

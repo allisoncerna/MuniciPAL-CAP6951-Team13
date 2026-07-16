@@ -1,0 +1,82 @@
+[
+  {
+    "query": "What are the guidelines for the collection and write-off of accounts receivable?",
+    "expected_files": ["Accounts Receivable (BF-26, Rev. 1).pdf"]
+  },
+  {
+    "query": "Who is responsible for administering new federal and state grant applications?",
+    "expected_files": ["Grant Administration (BF-24, Rev. 2).pdf"]
+  },
+  {
+    "query": "What is the procedure for amending or adjusting the adopted city budget?",
+    "expected_files": ["Budget Transfer and Amendment Policy (BF-7, Rev. 8).pdf"]
+  },
+  {
+    "query": "Which buildings are required to have automated external defibrillators and bleeding control kits?",
+    "expected_files": ["Ordinance No. 11-24.pdf", "Ordinance No. 08-26.pdf", "Ordinance No. 09-26.pdf"]
+  },
+  {
+    "query": "What are the fertilizer management regulations for landscape maintenance?",
+    "expected_files": ["Ordinance No. 28-24.pdf"]
+  },
+  {
+    "query": "What additional homestead exemption is available for persons 65 years of age and older?",
+    "expected_files": ["Ordinance No. 35-24.pdf"]
+  },
+  {
+    "query": "How do speed detection systems work in school zones and how are violations appealed?",
+    "expected_files": ["Ordinance No. 37-24.pdf"]
+  },
+  {
+    "query": "Are adult entertainment establishments prohibited south of Atlantic Avenue?",
+    "expected_files": ["Ordinance No. 06-25.pdf"]
+  },
+  {
+    "query": "How much did water rates and sanitary sewer user charges increase?",
+    "expected_files": ["Ordinance No. 15-25.pdf"]
+  },
+  {
+    "query": "What regulations govern retail tobacco and nicotine products dealers?",
+    "expected_files": ["Ordinance No. 04-25.pdf"]
+  },
+  {
+    "query": "What are the city's noise control regulations and permitted noise levels?",
+    "expected_files": ["Ordinance No. 35-25 _ Adopted in 2026.pdf"]
+  },
+  {
+    "query": "What is the dollar threshold requiring City Commission approval for acquisition of goods and services?",
+    "expected_files": ["Ordinance No. 13-26.pdf"]
+  },
+  {
+    "query": "Are veterinary clinics allowed as a principal use in the General Commercial district?",
+    "expected_files": ["Ordinance No. 11-25.pdf"]
+  },
+  {
+    "query": "What are the building regulations for docks, finger piers, and boat lifts?",
+    "expected_files": ["Ordinance No. 07-26.pdf"]
+  },
+  {
+    "query": "How did the city adopt the National Incident Management System (NIMS)?",
+    "expected_files": ["Ordinance No. 29-25.pdf", "Ordinance No. 29-25 _ Adopted in 2026.pdf"]
+  },
+  {
+    "query": "Can accessory dwelling units be rented out and can home-based businesses operate in accessory structures?",
+    "expected_files": ["Ordinance No. 12-26.pdf"]
+  },
+  {
+    "query": "What is the civil citation procedure used as an alternative code enforcement method?",
+    "expected_files": ["Ordinance No. 03-24.pdf"]
+  },
+  {
+    "query": "How does the city recover costs for fire-rescue responses to hazardous substance incidents?",
+    "expected_files": ["Ordinance No. 01-24.pdf"]
+  },
+  {
+    "query": "Are temporary parking lots allowed for off-site storage of automotive dealership vehicle inventory?",
+    "expected_files": ["Ordinance No. 12-24.pdf"]
+  },
+  {
+    "query": "How long can police officers and firefighters participate in the deferred retirement option plan (DROP)?",
+    "expected_files": ["Ordinance No. 26-25.pdf"]
+  }
+]
