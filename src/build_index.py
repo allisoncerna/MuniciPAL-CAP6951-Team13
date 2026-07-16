@@ -48,8 +48,11 @@ def build_index(manifest_path=MANIFEST_PATH):
             continue
         extra = {}
         for key in ("category", "year"):
-            if key in row and isinstance(row[key], str) and row[key]:
-                extra[key] = row[key]
+            # Values come back from the CSV as strings, ints (year), or NaN,
+            # so normalize everything to non-empty strings.
+            value = row.get(key)
+            if pd.notna(value) and str(value).strip():
+                extra[key] = str(value).split(".")[0] if key == "year" else str(value)
         count = add_document_chunks(collection, row["filename"], chunks, extra)
         total_chunks += count
         print(f"Indexed {row['filename']}: {count} chunks")

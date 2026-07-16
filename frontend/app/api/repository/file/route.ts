@@ -1,19 +1,9 @@
-import { readFileSync } from "fs";
-import path from "path";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-function getSafeFilePath(relativePath: string) {
-  const rootDir = path.resolve(process.cwd(), "..", "data", "raw");
-  const resolvedPath = path.resolve(rootDir, relativePath);
-
-  if (path.relative(rootDir, resolvedPath).startsWith("..")) {
-    return null;
-  }
-
-  return resolvedPath;
-}
+// FastAPI backend (src/api.py). Override with MUNICIPAL_API_URL in .env.local.
+const BACKEND_URL = process.env.MUNICIPAL_API_URL ?? "http://localhost:8000";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -23,24 +13,32 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Missing path" }, { status: 400 });
   }
 
-  const safePath = getSafeFilePath(relativePath);
+  // The backend serves documents by base filename regardless of folder.
+  const fileName = relativePath.split("/").pop() ?? relativePath;
+  const download = url.searchParams.get("download") === "1";
 
-  if (!safePath) {
-    return NextResponse.json({ error: "Invalid path" }, { status: 400 });
-  }
+  let response: Response;
 
   try {
-    const fileBuffer = readFileSync(safePath);
-    const fileName = path.basename(safePath);
-    const disposition = url.searchParams.get("download") === "1" ? "attachment" : "inline";
-
-    return new NextResponse(fileBuffer, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `${disposition}; filename="${fileName}"`
-      }
-    });
+    response = await fetch(
+      `${BACKEND_URL}/api/documents/${encodeURIComponent(fileName)}/file${download ? "?download=true" : ""}`,
+      { cache: "no-store" }
+    );
   } catch {
-    return NextResponse.json({ error: "File not found" }, { status: 404 });
+    return NextResponse.json(
+      { error: "Cannot reach the MuniciPAL backend. Start it with: uvicorn src.api:app --port 8000" },
+      { status: 502 }
+    );
   }
+
+  if (!response.ok) {
+    return NextResponse.json({ error: "File not found" }, { status: response.status });
+  }
+
+  return new NextResponse(response.body, {
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `${download ? "attachment" : "inline"}; filename="${fileName}"`
+    }
+  });
 }

@@ -16,12 +16,14 @@
 
 import os
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from src.chunking import chunk_text
@@ -33,7 +35,17 @@ from src.vector_store import add_document_chunks, delete_document, get_collectio
 load_dotenv(override=True)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-UPLOAD_DIR = PROJECT_ROOT / "data" / "raw" / "uploads"
+RAW_DIR = PROJECT_ROOT / "data" / "raw"
+UPLOAD_DIR = RAW_DIR / "uploads"
+
+
+def find_source_file(filename):
+    """Locate a document's PDF under data/raw by its base filename."""
+    target = Path(filename).name
+    for path in RAW_DIR.rglob("*.pdf"):
+        if path.name == target:
+            return path
+    return None
 
 app = FastAPI(title="MuniciPAL API", version="0.1.0")
 
@@ -134,7 +146,32 @@ def generate(req: GenerateRequest):
 
 @app.get("/api/documents")
 def documents():
-    return list_documents(get_collection())
+    # Merge index metadata with file stats so the frontend repository page
+    # can show size/date and link to the PDF without touching the filesystem.
+    docs = list_documents(get_collection())
+    for doc in docs:
+        source = find_source_file(doc["filename"])
+        if source:
+            stat = source.stat()
+            doc["size_bytes"] = stat.st_size
+            doc["modified"] = datetime.fromtimestamp(
+                stat.st_mtime, tz=timezone.utc
+            ).isoformat()
+            doc["rel_path"] = source.relative_to(RAW_DIR).as_posix()
+    return docs
+
+
+@app.get("/api/documents/{filename}/file")
+def document_file(filename: str, download: bool = False):
+    source = find_source_file(filename)
+    if source is None:
+        raise HTTPException(status_code=404, detail=f"'{filename}' not found in data/raw.")
+    return FileResponse(
+        source,
+        media_type="application/pdf",
+        filename=source.name,
+        content_disposition_type="attachment" if download else "inline",
+    )
 
 
 @app.post("/api/documents/upload")

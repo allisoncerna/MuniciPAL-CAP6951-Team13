@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/shared/section-header";
 import { DocumentToolbar } from "@/components/repository/document-toolbar";
@@ -28,47 +28,35 @@ export default function RepositoryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let isActive = true;
+  const loadDocuments = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setLoadError(null);
 
-    async function loadDocuments() {
-      try {
-        setIsLoading(true);
-        setLoadError(null);
-
-        const response = await fetch("/api/repository", {
-          headers: {
-            Accept: "application/json"
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to load repository documents (${response.status})`);
+      const response = await fetch("/api/repository", {
+        headers: {
+          Accept: "application/json"
         }
+      });
 
-        const payload = (await response.json()) as { documents?: RepositoryDocument[] };
+      const payload = (await response.json()) as { documents?: RepositoryDocument[]; error?: string };
 
-        if (isActive) {
-          setDocuments(payload.documents ?? []);
-        }
-      } catch (error) {
-        if (isActive) {
-          setLoadError(error instanceof Error ? error.message : "Failed to load repository documents.");
-          setDocuments([]);
-        }
-      } finally {
-        if (isActive) {
-          setIsLoading(false);
-        }
+      if (!response.ok) {
+        throw new Error(payload.error ?? `Failed to load repository documents (${response.status})`);
       }
+
+      setDocuments(payload.documents ?? []);
+    } catch (error) {
+      setLoadError(error instanceof Error ? error.message : "Failed to load repository documents.");
+      setDocuments([]);
+    } finally {
+      setIsLoading(false);
     }
-
-    void loadDocuments();
-
-    return () => {
-      isActive = false;
-    };
   }, []);
+
+  useEffect(() => {
+    void loadDocuments();
+  }, [loadDocuments]);
 
   const filteredDocuments = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -167,8 +155,8 @@ export default function RepositoryPage() {
     link.remove();
   }
 
-  function deleteDocument(document: RepositoryDocument) {
-    const confirmed = window.confirm(`Delete ${document.name}?`);
+  async function deleteDocument(document: RepositoryDocument) {
+    const confirmed = window.confirm(`Delete ${document.name}? This removes it from the retrieval index.`);
 
     if (!confirmed) {
       return;
@@ -176,6 +164,18 @@ export default function RepositoryPage() {
 
     if (document.localUrl) {
       URL.revokeObjectURL(document.localUrl);
+    }
+
+    if (document.sourcePath) {
+      const response = await fetch(`/api/repository?filename=${encodeURIComponent(document.sourcePath)}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json()) as { error?: string };
+        window.alert(payload.error ?? "Failed to delete the document.");
+        return;
+      }
     }
 
     setDocuments((current) => current.filter((item) => item.id !== document.id));
@@ -191,27 +191,30 @@ export default function RepositoryPage() {
     input.type = "file";
     input.accept = ".pdf";
 
-    input.onchange = () => {
+    input.onchange = async () => {
       const file = input.files?.[0];
 
       if (!file) {
         return;
       }
 
-      const today = new Date().toISOString().slice(0, 10);
-      const nextDocument: RepositoryDocument = {
-        id: `${file.name}-${Date.now()}`.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase(),
-        name: file.name.replace(/\.pdf$/i, ""),
-        type: "Uploaded",
-        department: "Local Uploads",
-        uploadedAt: today,
-        size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-        status: "Review",
-        tags: ["Upload"],
-        localUrl: URL.createObjectURL(file)
-      };
+      // Send the PDF to the backend, which extracts, chunks, and indexes it
+      // so generated documents can immediately cite it.
+      const formData = new FormData();
+      formData.append("file", file);
 
-      setDocuments((current) => [nextDocument, ...current]);
+      const response = await fetch("/api/repository", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json()) as { error?: string };
+        window.alert(payload.error ?? "Failed to upload the document.");
+        return;
+      }
+
+      await loadDocuments();
       setCurrentPage(1);
       setActiveActionDocumentId(null);
     };
