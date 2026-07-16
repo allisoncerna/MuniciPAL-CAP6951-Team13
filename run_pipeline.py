@@ -33,4 +33,4 @@ relevant_chunks = get_relevant_chunks(user_query)
 response = engine.generate_response(user_query, relevant_chunks)
 
 print(f"query: {user_query}")
-print(f"engine response: {response}"
+print(f"engine response: {response}")
