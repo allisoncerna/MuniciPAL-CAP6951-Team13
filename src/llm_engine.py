@@ -15,7 +15,7 @@ class MuniciPALEngine:
             # setting up the connection to gemini
             genai.configure(api_key=self.api_key)
             
-            self.model = genai.GenerativeModel('gemini-2.0-flash')
+            self.model = genai.GenerativeModel('gemini-flash-latest')
         else:
             self.model = None
 
