@@ -7,9 +7,9 @@ MuniciPAL is a Retrieval-Augmented Generation (RAG) system built collaboratively
 
 ## Team & Contributions
 Developed collaboratively by Team 13 (Allison Cerna, Francesca Dumary, and Matthew Henao):
-* **Allison Cerna (Team Leader)**: Led project direction, architected the RAG evaluation framework, developed the LLM integration and prompt grounding logic, and maintained overall technical strategy.
-* **Matthew Henao**: Owned the data engineering pipelines, vector search infrastructure, and ChromaDB indexing.
-* **Francesca Dumary**: Contributed to full-stack integration, system architecture, and query flow implementation.
+* **Allison Cerna (Team Leader)**: Led overall project direction, architected the RAG evaluation framework, built the AI/LLM integration, prompt grounding logic, and authored all major project reports, presentations, and poster deliverables.
+* **Matthew Henao**: Built and optimized the data engineering pipelines, vector search infrastructure, and ChromaDB integration.
+* **Francesca Dumary**: Designed and implemented the full-stack frontend interface.
 
 ## Key Features
 * **End-to-End RAG Pipeline**: Automated PDF ingestion, manifest tracking, chunking strategies (512-word chunks with 64-word overlap), and persistent local vector storage via ChromaDB.
